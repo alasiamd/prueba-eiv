@@ -1,0 +1,35 @@
+<div>
+    <ul class="list-group list-group-horizontal"> 
+        <li class="list-group-item id">ID </li>
+        <li class="list-group-item user">Usuario </li>
+        <li class="list-group-item name">Nombre </li>
+        <li class="list-group-item  habi">Habilitado </li>
+        <li class="list-group-item fecNac">Fecha de nacimiento </li>
+        <li class="list-group-item  obs">Observaciones</li>
+        <li class="list-group-item loc"> Localidad</li>
+        <li class="list-group-item new">
+            <a [routerLink]="'vendedoresN/nuevo'">
+                <img src="../../assets/new.png" class="boton2" title="Nuevo">  
+            </a>
+        </li>
+    </ul>
+    <ul class="list-group list-group-horizontal" *ngFor="let vendedor of vendedores">
+        <li class="list-group-item id">{{ vendedor.id }} </li>
+        <li class="list-group-item  user">{{ vendedor.usuarioLogin }} </li>
+        <li class="list-group-item name">{{ vendedor.nombre }} </li>
+        <li class="list-group-item habi">{{ vendedor.habilitado }} </li>
+        <li class="list-group-item fecNac">{{ vendedor.fechaNacimiento }} </li>
+        <li class="list-group-item obs">{{ vendedor.observaciones }} </li>
+        <li class="list-group-item loc">{{ vendedor.localidad.localidad }} </li>
+        <li class="list-group-item ">
+            <a (click)="borrar(vendedor)">
+                <img src="../../assets/delete.png" class="boton" title="Borrar">  
+            </a>
+        </li>
+        <li class="list-group-item ">
+            <a [routerLink]="'vendedores/'+ vendedor.id">
+                <img src="../../assets/edit.png" class="boton" title="Editar"> 
+            </a>         
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,115 @@
+<ng-container *ngIf="idRoute==0;else modificar" >
+    <form novalidate  (ngSubmit)="guardar(vendedor)" #f="ngForm">
+        <div class="container">
+            <div class="input pt-5">
+              <label class="label">ID</label>
+              <label class="">  </label>
+            </div>
+            <div class="input pt-2">
+              <label class="label">Usuario</label>
+              <input type="text" name="usuario" [(ngModel)]="usuarioLogin" required/>
+            </div>
+            <div class="input pt-2">
+                <label class="label">Nombre</label>
+                <input type="text" name="nombre" [(ngModel)]="nombre" required />
+            </div>
+            <div class="input pt-2">
+                <label class="label">Habilitado</label>
+                <select name="habilitado" id="" [(ngModel)]="habilitado" (change)="hCambio()" required>
+                    <option value="true">
+                        SI
+                    </option>
+                    <option value="false">
+                        NO
+                    </option>
+                </select>
+              </div>
+              <div class="input  pt-2">
+                  <label class="label">Fecha de nacimiento</label>
+                  <input type="date" name="fechaNacimiento" (change)="getAge(fechaNacimiento)" [(ngModel)]="fechaNacimiento" required/>
+              </div>
+              <div class="input  pt-2">
+                <label class="label">Observaciones</label>
+                <input type="text" name="observaciones" [(ngModel)]="observaciones" />
+              </div>
+              <div class="input  pt-2">
+                  <label class="label">Localidad</label>             
+                  <select name="localidad" id="" (change)="lCambio()" [(ngModel)]="localidad" >
+                      <option  [ngValue]="localidad" *ngFor="let localidad of localidades">
+                          {{ localidad.localidad }}                        
+                      </option>               
+                  </select>
+              </div>
+        </div>
+    
+        <br>
+        <div class="container">
+            <button type="submit"  [disabled]="f.invalid">
+                Guardar
+            </button>
+            <button (click)="salir()">
+                Cancelar
+            </button>
+        </div>  
+                      
+    </form>
+    
+</ng-container>
+
+<ng-template #modificar>
+    <form novalidate  (ngSubmit)="guardar(vendedor)" #f="ngForm">
+        <div class="container">
+            <div class="input pt-5">
+              <label class="label">ID</label>
+              <label class=""> {{ vendedor.id }} </label>
+            </div>
+            <div class="input pt-2">
+              <label class="label">Usuario</label>
+              <input type="text" name="usuario" [(ngModel)]="vendedor.usuarioLogin" required/>
+            </div>
+            <div class="input pt-2">
+                <label class="label">Nombre</label>
+                <input type="text" name="nombre" [(ngModel)]="vendedor.nombre" required />
+            </div>
+            <div class="input pt-2">
+                <label class="label">Habilitado</label>
+                <select name="habilitado" id="" [(ngModel)]="vendedor.habilitado" (change)="hCambio()" required>
+                    <option value="true" [selected]="vendedor.habilitado==true" >
+                        SI
+                    </option>
+                    <option value="false" [selected]="vendedor.habilitado==false">
+                        NO
+                    </option>
+                </select>
+              </div>
+              <div class="input  pt-2">
+                  <label class="label">Fecha de nacimiento</label>
+                  <input type="date" name="fechaNacimiento" (change)="getAge(vendedor.fechaNacimiento)" [(ngModel)]="vendedor.fechaNacimiento" required/>
+              </div>
+              <div class="input  pt-2">
+                <label class="label">Observaciones</label>
+                <input type="text" name="observaciones" [(ngModel)]="vendedor.observaciones" />
+              </div>
+              <div class="input  pt-2">
+                  <label class="label">Localidad</label>             
+                  <select name="localidad" id="" (change)="lCambio()" [(ngModel)]="vendedor.localidad.localidad" required>
+                      <option  [ngValue]="localidad.localidad" *ngFor="let localidad of localidades">
+                          {{ localidad.localidad }}                        
+                      </option>               
+                  </select>
+              </div>
+        </div>
+    
+        <br>
+        <div class="container">
+            <button type="submit"  [disabled]="f.invalid">
+                Guardar
+            </button>
+            <button (click)="salir()">
+                Cancelar
+            </button>
+        </div>  
+                      
+    </form>
+    
+</ng-template>
