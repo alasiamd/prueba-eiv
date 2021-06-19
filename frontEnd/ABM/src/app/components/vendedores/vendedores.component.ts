@@ -54,7 +54,7 @@ export class VendedoresComponent implements OnInit {
         this.vendedores = data;
               
         this.vendedor = this.vendedores.find(x => x.id == this.idRoute); 
-        this.edad = parseInt(moment(this.vendedor.fechaNacimiento).fromNow().split(" ")[0]);
+        this.edad = this.ahora.diff(moment(this.vendedor.fechaNacimiento),'years');
       });
     }
 
@@ -68,13 +68,13 @@ export class VendedoresComponent implements OnInit {
   }
 
   getAge(fechaNacimiento:string){
-    this.edad = parseInt(moment(fechaNacimiento).fromNow().split(" ")[0]);   
-
+    this.edad = this.ahora.diff(moment(fechaNacimiento),'years');
+    
   }
 
   guardar(vendedor:Vendedor){
-    if (this.edad <= 18 || this.edad >= 65) {
-      alert('No se admiten edades menores a 18 ni mayores a 65 años!!!');
+    if (this.edad < 18 || this.edad > 65) {
+      alert('No se admiten edades menores a 18 ni mayores a 65 años!!! '+ this.edad);
     }
     else {
       if (this.idRoute == 0) {
@@ -88,12 +88,10 @@ export class VendedoresComponent implements OnInit {
         this.vendedoresService.postVendedores(this.vendedor).subscribe();
       }
       else {
-        console.log('salio por el PUT');
-
+        
         this.vendedoresService.putVendedores(this.vendedor).subscribe();
       }
-    console.log(this.vendedor)
-
+    
     }
   }
 
