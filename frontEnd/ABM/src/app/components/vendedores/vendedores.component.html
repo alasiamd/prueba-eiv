@@ -57,9 +57,12 @@
 </ng-container>
 
 <ng-template #modificar>
+    <div class="container">
+        <img src='' alt="image" name="base64data" class="img">
+    </div>
     <form novalidate  (ngSubmit)="guardar(vendedor)" #f="ngForm">
         <div class="container">
-            <div class="input pt-5">
+            <div class="input ">
               <label class="label">ID</label>
               <label class=""> {{ vendedor.id }} </label>
             </div>

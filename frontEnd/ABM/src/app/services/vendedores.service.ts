@@ -19,6 +19,11 @@ export class VendedoresService {
       'Content-Type': 'application/json'
     }
   };
+  httpOptionsFoto = {
+    headers: {
+      'Content-Type': 'application/octet-stream'
+    }
+  };
 
   vendedores: Vendedor[] = [];
   localidades: Localidad[] = [];
@@ -30,6 +35,10 @@ export class VendedoresService {
     return this.http.get<Localidad[]>(this.urlLoc,this.httpOptions);
   }
 
+  getFoto(id:number):Observable<Vendedor[]>{
+    return this.http.get<Vendedor[]>(this.urlABM+"/"+ id+"/foto",this.httpOptionsFoto);
+  }
+  
   getVendedores():Observable<Vendedor[]>{
     return this.http.get<Vendedor[]>(this.url,this.httpOptions);
   }
