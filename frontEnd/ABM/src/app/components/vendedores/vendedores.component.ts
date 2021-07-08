@@ -42,48 +42,41 @@ export class VendedoresComponent implements OnInit {
   }
 
   constructor(public vendedoresService: VendedoresService,
-              private rutaActiva: ActivatedRoute,
-              private router:Router ) { }
+    private rutaActiva: ActivatedRoute,
+    private router:Router ) { }
 
-  ngOnInit(): void {
-    
+ngOnInit(): void {
 
-    this.vendedoresService.getLocalidades().subscribe(data =>{
-      this.localidades = data;
-    });
 
-    this.idRoute = this.rutaActiva.snapshot.params.idRoute;    
-    
-    if (this.idRoute != 0) {
-      this.vendedoresService.getVendedores().subscribe(data =>{
-        this.vendedores = data;
-              
-        this.vendedor = this.vendedores.find(x => x.id == this.idRoute); 
-        this.edad = this.ahora.diff(moment(this.vendedor.fechaNacimiento),'years');
-        
-        this.vendedoresService.getFoto(this.vendedor.id).subscribe(data =>{
-          this.imageSrc = data;
+  this.vendedoresService.getLocalidades().subscribe(data =>{
+    this.localidades = data;
+  });
+
+  this.idRoute = this.rutaActiva.snapshot.params.idRoute;    
   
-          //var reader  = new FileReader();
+  if (this.idRoute != 0) {
+    this.vendedoresService.getVendedores().subscribe(data =>{
+      this.vendedores = data;
+            
+      this.vendedor = this.vendedores.find(x => x.id == this.idRoute); 
+      this.edad = this.ahora.diff(moment(this.vendedor.fechaNacimiento),'years');
+        
+        this.vendedoresService.getFoto(this.vendedor.id).subscribe((blob: Blob) => {
           
-          this.reader.readAsDataURL(this.imageSrc); 
-          this.reader.onloadend = function() {
-            var imagen:any = document.querySelector('img');
-            imagen.src = this.result
-            //this.base64data.src = reader.result;     
-            console.log('lalala',imagen)
-         }
-         
-        });
+          var reader  = new FileReader();
 
-        
-        
+          reader.readAsDataURL(blob);
+          reader.onloadend = function () {
+            var imagen: any = document.querySelector('img');
+            imagen.src = this.result;
+          }
+        });
       });
-      
+
     }
 
-    
-    
+
+
   }
 
   salir(){
