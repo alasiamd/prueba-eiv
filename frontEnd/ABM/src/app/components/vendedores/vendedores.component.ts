@@ -15,12 +15,15 @@ import * as moment from 'moment';
 })
 export class VendedoresComponent implements OnInit {
 
-  public imageSrc:any;
-  public reader = new FileReader();
+  //public imageSrc:any;
+  //public reader = new FileReader();
 
   public localidades: Localidad[]=[];
   public vendedores:Vendedor[]=[];
-  //public vendedor:any;
+  
+  public cambiaFoto: boolean=false;
+  public foto: any;
+
   idRoute:number=0;
   ahora = moment();
   public edad:number=0;
@@ -61,23 +64,15 @@ export class VendedoresComponent implements OnInit {
         this.vendedor = this.vendedores.find(x => x.id == this.idRoute); 
         this.edad = this.ahora.diff(moment(this.vendedor.fechaNacimiento),'years');
         
-        this.vendedoresService.getFoto(this.vendedor.id).subscribe(data =>{
-          this.imageSrc = data;
-  
-          //var reader  = new FileReader();
-          
-          this.reader.readAsDataURL(this.imageSrc); 
-          this.reader.onloadend = function() {
-            var imagen:any = document.querySelector('img');
-            imagen.src = this.result
-            //this.base64data.src = reader.result;     
-            console.log('lalala',imagen)
-         }
-         
-        });
+        this.vendedoresService.getFoto(this.vendedor.id).subscribe((blob: Blob) =>{
 
-        
-        
+          let reader  = new FileReader();          
+          reader.readAsDataURL(blob); 
+          reader.onloadend = function() {
+            let imagen:any = document.querySelector('img');
+            imagen.src = this.result;            
+         }         
+        });                
       });
       
     }
@@ -112,7 +107,10 @@ export class VendedoresComponent implements OnInit {
         this.vendedoresService.postVendedores(this.vendedor).subscribe();
       }
       else {
-        
+        const formFoto = new FormData();
+        formFoto.append('file',this.foto);
+        this.vendedoresService.posFoto(this.vendedor.id).subscribe();
+
         this.vendedoresService.putVendedores(this.vendedor).subscribe();
       }
     
@@ -127,6 +125,18 @@ export class VendedoresComponent implements OnInit {
   lCambio(){
     
     //console.log('Localidad',this.vendedor.localidad.localidad)
+  }
+
+  getFile(event:any){
+    let file = event.target.files[0];
+    let reader  = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = function() {
+      let imagen:any = document.querySelector('img');
+      imagen.src = this.result;           
+   }
+    this.foto = reader;
+    this.cambiaFoto = true;
   }
 
 }

@@ -20,9 +20,7 @@ export class VendedoresService {
     }
   };
   httpOptionsFoto = {
-    headers: {
-      'Content-Type': 'application/octet-stream'
-    }
+    responseType: "blob"
   };
 
   vendedores: Vendedor[] = [];
@@ -35,10 +33,14 @@ export class VendedoresService {
     return this.http.get<Localidad[]>(this.urlLoc,this.httpOptions);
   }
 
-  getFoto(id:number):Observable<Vendedor[]>{
-    return this.http.get<Vendedor[]>(this.urlABM+"/"+ id+"/foto",this.httpOptionsFoto);
+  getFoto(id:number):Observable<Blob>{
+    return this.http.get(`${this.urlABM}${id}/foto`, { responseType: 'blob' });
   }
   
+  posFoto(id:number):Observable<any>{
+    return this.http.post(`${this.urlABM}${id}/foto`, { responseType: 'formData' });
+  }
+
   getVendedores():Observable<Vendedor[]>{
     return this.http.get<Vendedor[]>(this.url,this.httpOptions);
   }

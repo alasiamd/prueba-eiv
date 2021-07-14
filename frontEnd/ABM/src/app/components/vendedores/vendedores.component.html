@@ -58,8 +58,14 @@
 
 <ng-template #modificar>
     <div class="container">
-        <img src='' alt="image" name="base64data" class="img">
+        <div class="d-inline-block">
+            <img src='' alt="image" name="base64data" class="img">
+        </div>
+        <div class="d-inline-block align-bottom">
+            <input type="file" (change)="getFile($event)">
+        </div>
     </div>
+    
     <form novalidate  (ngSubmit)="guardar(vendedor)" #f="ngForm">
         <div class="container">
             <div class="input ">
