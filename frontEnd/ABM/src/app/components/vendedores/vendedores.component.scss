@@ -1,3 +1,15 @@
 .label{
     width: 150px;
 }
+
+.img {
+    width: 100px;
+    height: 100px;
+    background-size: 100%;
+    background-position: center; 
+
+    &::before {
+        content: " ";
+        display: block;
+    }
+}

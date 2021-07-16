@@ -19,6 +19,9 @@ export class VendedoresService {
       'Content-Type': 'application/json'
     }
   };
+  httpOptionsFoto = {
+    responseType: "blob"
+  };
 
   vendedores: Vendedor[] = [];
   localidades: Localidad[] = [];
@@ -28,6 +31,14 @@ export class VendedoresService {
 
   getLocalidades():Observable<Localidad[]>{
     return this.http.get<Localidad[]>(this.urlLoc,this.httpOptions);
+  }
+
+  getFoto(id:number):Observable<Blob>{
+    return this.http.get(`${this.urlABM}${id}/foto`, { responseType: 'blob' });
+  }
+  
+  posFoto(id:number):Observable<any>{
+    return this.http.post(`${this.urlABM}${id}/foto`, { responseType: 'formData' });
   }
 
   getVendedores():Observable<Vendedor[]>{
